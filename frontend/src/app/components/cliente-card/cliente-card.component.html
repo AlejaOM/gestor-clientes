@@ -1,0 +1,57 @@
+<mat-card class="cliente-card" [class.cliente-inactivo]="!cliente.estado">
+  <mat-card-header>
+    <mat-card-title
+      >{{ cliente.nombre }} {{ cliente.apellido_1 }}</mat-card-title
+    >
+
+    <mat-card-subtitle>{{ cliente.documento }}</mat-card-subtitle>
+
+    <button
+      mat-icon-button
+      class="edit-button"
+      aria-label="Editar cliente"
+      matTooltip="Editar Cliente"
+      (click)="lanzarEdicion()"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><mat-icon>email</mat-icon> {{ cliente.correo_electronico }}</p>
+    <p><mat-icon>phone</mat-icon> {{ cliente.telefono || "No disponible" }}</p>
+    <p><mat-icon>location_city</mat-icon> {{ cliente.ciudad }}</p>
+    <!--<p *ngIf="cliente.id_condicion_pago === 2">
+      <mat-icon>account_balance_wallet</mat-icon> Cupo:
+      {{ cliente.valor_cupo | currency : "COP" : "symbol" : "1.0-0" }}
+    </p>-->
+  <p><mat-icon>update</mat-icon> Últ. Modif.: {{ cliente.fecha_hora_auditoria | date:'short' }}</p>
+  
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <div class="estado-container">
+      <mat-slide-toggle
+        [checked]="cliente.estado"
+        (change)="onEstadoChange($event)"
+        [disabled]="isUpdatingEstado"
+        color="primary"
+        matTooltip="{{
+          cliente.estado
+            ? 'Cliente Activo (clic para desactivar)'
+            : 'Cliente Inactivo (clic para activar)'
+        }}"
+      >
+        {{ cliente.estado ? "Activo" : "Inactivo" }}
+      </mat-slide-toggle>
+
+      <mat-spinner
+        *ngIf="isUpdatingEstado"
+        diameter="20"
+        style="margin-left: 8px"
+      ></mat-spinner>
+    </div>
+
+    <small *ngIf="errorEstado" class="error-estado">{{ errorEstado }}</small>
+  </mat-card-actions>
+</mat-card>

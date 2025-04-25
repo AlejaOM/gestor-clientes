@@ -1,0 +1,63 @@
+.cliente-card {
+    width: 300px;
+    margin-bottom: 16px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-left: 5px solid #050c33;
+  }
+  
+  .cliente-card:hover { 
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .cliente-card.cliente-inactivo {
+    border-left-color: red;
+    opacity: 0.8;
+  }
+  
+  mat-card-header { 
+    position: relative;
+  }
+  
+  .edit-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+  
+  mat-card-content p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  mat-card-content mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    color: #777;
+  }
+  
+  .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px 16px !important;
+    position: relative;
+  }
+  
+  .estado-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .error-estado {
+    color: red;
+    font-size: 0.8em;
+    position: absolute;
+    bottom: -10px;
+    right: 16px;
+  }

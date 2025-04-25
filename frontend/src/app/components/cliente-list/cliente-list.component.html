@@ -1,0 +1,68 @@
+<!--<h2>Gestión de Clientes</h2>
+
+<div class="search-container" *ngIf="mostrarSeccionBusqueda">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Buscar por Documento</mat-label>
+    <input
+      matInput
+      placeholder="Ingrese número de documento"
+      #docInput
+      (keyup.enter)="buscarCliente(docInput.value)"
+    />
+    <mat-icon matSuffix>badge</mat-icon>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="buscarCliente(docInput.value)" [disabled]="isLoading">
+    <mat-icon>search</mat-icon>
+    <span *ngIf="!isLoading">Buscar</span>
+    <span *ngIf="isLoading">Buscando...</span>
+  </button>
+
+  <button mat-stroked-button (click)="limpiarBusqueda()" *ngIf="busquedaActiva" style="margin-left: 8px;">
+      <mat-icon>refresh</mat-icon> Mostrar Todos
+  </button>
+</div>-->
+
+<div *ngIf="isLoading" style="text-align: center; margin-top: 20px;">
+  <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+  <p>Cargando...</p>
+</div>
+
+<div *ngIf="mensajeExito && !isLoading" class="mensaje-exito-verde">
+   <mat-icon>check_circle_outline</mat-icon>
+   {{ mensajeExito }}
+</div>
+
+<div *ngIf="error && !isLoading && !mensajeExito" class="error-message">
+   <mat-icon>error_outline</mat-icon> {{ error }}
+</div>
+
+<div *ngIf="!isLoading && !error" class="card-container">
+
+  <ng-container *ngIf="clientesMostrados.length > 0; else noClientes">
+    <ng-container *ngFor="let cliente of clientesMostrados">
+      <app-cliente-card
+        [cliente]="cliente"
+        (editar)="abrirModalEditar($event)">
+      </app-cliente-card>
+    </ng-container>
+  </ng-container>
+
+  <mat-card *ngIf="!busquedaActiva" class="add-new-card" (click)="abrirModalCrear()" appearance="outlined" title="Crear nuevo cliente">
+     <mat-card-content style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+       <mat-icon class="add-icon" style="font-size: 48px; width: 48px; height: 48px; color: grey;">add_circle_outline</mat-icon>
+       <div style="margin-top: 8px; color: grey;">Crear Nuevo Cliente</div>
+     </mat-card-content>
+   </mat-card>
+
+   <ng-template #noClientes>
+      <!--<div *ngIf="!busquedaActiva" class="no-data-message">
+         No hay clientes para mostrar.
+         <button mat-stroked-button color="primary" (click)="abrirModalCrear()" style="margin-left: 10px;">Crear el primero</button>
+      </div>-->
+      <div *ngIf="busquedaActiva" class="no-data-message">
+         No se encontraron clientes con los criterios de búsqueda.
+      </div>
+   </ng-template>
+
+</div>

@@ -1,0 +1,95 @@
+/* Estilos para el contenedor de tarjetas en cliente-list.component.css */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Espacio entre tarjetas */
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  /* Estilos aplicados TANTO a las tarjetas de cliente COMO a la tarjeta de añadir */
+  /* Usamos el selector del componente hijo y la clase de la tarjeta de añadir */
+  app-cliente-card,
+  .add-new-card {
+    width: 300px; /* Ancho fijo igual al de .cliente-card */
+    min-height: 200px; /* Altura mínima para consistencia (ajusta si es necesario) */
+    margin-bottom: 16px; /* Margen inferior igual al de .cliente-card */
+    box-sizing: border-box; /* Asegura que padding/border no afecten el ancho/alto total */
+    display: flex; /* Necesario para que flex funcione en add-new-card */
+    flex-direction: column; /* Para que el contenido de la tarjeta se apile verticalmente */
+  }
+  
+  /* Estilos específicos SOLO para la tarjeta de añadir */
+  .add-new-card {
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px dashed grey;
+    transition: background-color 0.2s ease-in-out; /* Transición suave para hover */
+  }
+  
+  .add-new-card:hover {
+    background-color: #f0f0f0; /* Un ligero cambio de color al pasar el mouse */
+  }
+  
+  .add-new-card mat-card-content {
+    /* Los estilos internos del contenido de add-new ya están inline en el HTML,
+       pero podrías moverlos aquí si prefieres */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .add-new-card .add-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: grey;
+  }
+  
+  .add-new-card div {
+     margin-top: 8px;
+     color: grey;
+  }
+  
+  /* Estilos para los mensajes y el spinner (puedes añadirlos aquí también) */
+  .loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .error-message,
+  .no-results-message {
+    color: red;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .no-results-message {
+    color: #555;
+  }
+
+  .mensaje-exito-verde {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724;       /* Verde oscuro */
+    border: 1px solid #c3e6cb;
+    padding: 12px 18px;
+    margin: 15px 0;
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .mensaje-exito-verde mat-icon {
+    color: #155724;
+  }

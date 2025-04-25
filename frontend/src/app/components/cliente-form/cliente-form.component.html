@@ -1,0 +1,107 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Cliente' : 'Crear Nuevo Cliente' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="clienteForm" id="clienteForm">
+    <div class="form-grid"> <mat-form-field appearance="outline">
+        <mat-label>Documento</mat-label>
+        <input matInput formControlName="documento" required maxlength="12" placeholder="109...">
+        <mat-error *ngIf="f['documento'].errors?.['required']">Documento es requerido</mat-error>
+        <mat-error *ngIf="f['documento'].errors?.['maxlength']">Máximo 12 caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" required maxlength="50">
+        <mat-error *ngIf="f['nombre'].errors?.['required']">Nombre es requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Primer Apellido</mat-label>
+        <input matInput formControlName="apellido_1" required maxlength="50">
+        <mat-error *ngIf="f['apellido_1'].errors?.['required']">Primer apellido es requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Segundo Apellido (Opcional)</mat-label>
+        <input matInput formControlName="apellido_2" maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dirección (Opcional)</mat-label>
+        <input matInput formControlName="direccion" maxlength="100">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono (Opcional)</mat-label>
+        <input matInput formControlName="telefono" maxlength="10" placeholder="300...">
+        <mat-error *ngIf="f['telefono'].errors?.['pattern']">Debe ingresar 10 dígitos numéricos</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput formControlName="correo_electronico" required email maxlength="100" placeholder="usuario@email.com">
+        <mat-error *ngIf="f['correo_electronico'].errors?.['required']">Correo es requerido</mat-error>
+        <mat-error *ngIf="f['correo_electronico'].errors?.['email']">Correo no válido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="ciudad" required>
+          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad">
+            {{ciudad}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f['ciudad'].errors?.['required']">Ciudad es requerida</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Condición de Pago</mat-label>
+        <mat-select formControlName="id_condicion_pago" required>
+          <mat-option *ngFor="let condicion of condicionesPago$ | async" [value]="condicion.id">
+            {{condicion.nombre}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f['id_condicion_pago'].errors?.['required']">Condición es requerida</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+         <mat-label>Valor Cupo</mat-label>
+         <input matInput type="number" formControlName="valor_cupo" placeholder="500000.00" min="0.01">
+         <mat-error *ngIf="f['valor_cupo'].errors?.['required'] && clienteForm.get('id_condicion_pago')?.value == ID_CREDITO">
+           Valor de cupo es requerido para Crédito
+         </mat-error>
+          <mat-error *ngIf="f['valor_cupo'].errors?.['min'] && clienteForm.get('id_condicion_pago')?.value == ID_CREDITO">
+           Valor de cupo debe ser mayor a 0 para Crédito
+         </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Medio de Pago</mat-label>
+         <mat-select formControlName="id_medio_pago">
+           <mat-option *ngFor="let medio of mediosPago$ | async" [value]="medio.id">
+             {{medio.nombre}}
+           </mat-option>
+        </mat-select>
+         <mat-error *ngIf="f['id_medio_pago'].errors?.['required'] && clienteForm.get('id_condicion_pago')?.value == ID_CONTADO">
+           Medio de pago es requerido para Contado
+         </mat-error>
+      </mat-form-field>
+
+      <div class="toggle-field">
+         <mat-slide-toggle formControlName="estado" color="primary">
+            {{ f['estado'].value ? 'Activo' : 'Inactivo' }}
+         </mat-slide-toggle>
+      </div>
+
+    </div> <p *ngIf="error" class="form-error-message">{{error}}</p>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="guardar()" [disabled]="clienteForm.invalid || isLoading">
+    <span *ngIf="!isLoading">{{ isEditMode ? 'Actualizar' : 'Crear Cliente' }}</span>
+    <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="20" style="margin: 0 auto;"></mat-progress-spinner>
+  </button>
+</mat-dialog-actions>
