@@ -1,0 +1,74 @@
+# Ignorar archivos específicos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar directorios y archivos de IDEs comunes
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignorar archivos de logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# --- Frontend (Angular / Node.js) ---
+
+# Dependencias (¡Muy importante!)
+node_modules/
+
+# Archivos de build y distribución
+dist/
+www/
+build/
+coverage/
+*.js.map
+*.tsbuildinfo
+
+# Archivos de entorno (¡CUIDADO!)
+# Usualmente src/environments/environment.ts (desarrollo) SÍ se versiona.
+# Pero los de producción o con secretos NO deberían versionarse directamente.
+# Revisa si tienes secretos aquí antes de descomentar.
+# src/environments/environment.*.ts
+# !src/environments/environment.ts
+
+# --- Backend (Python / FastAPI / Venv) ---
+
+# Entornos virtuales (¡Muy importante!)
+venv/
+env/
+.venv/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Archivos compilados de Python y caches
+*.pyc
+__pycache__/
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.coverage
+*.egg-info/
+.eggs/
+
+# Archivos de distribución de Python
+dist/
+build/
+*.egg
+*.whl
+
+# Bases de datos locales (si usas SQLite para desarrollo)
+*.sqlite3
+*.db
+
+# Archivos de entorno y secretos de Python (¡CUIDADO!)
+# Archivos .env usualmente contienen secretos y NO deben versionarse.
+.env*
+! .env.example # Es común versionar un ejemplo sin secretos
+
+# Otros
+*.bak
+*.swp
